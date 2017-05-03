@@ -1,7 +1,7 @@
 {
   "name": "mrdict",
   "version": "1.0.0",
-  "description": "A dictionary helps measure readings for secondary language readers",
+  "description": "A browser extension helps measure readings not only as a dictionary",
   "scripts": {
     "chrome-build": "TARGET=chrome gulp",
     "opera-build": "TARGET=opera gulp",

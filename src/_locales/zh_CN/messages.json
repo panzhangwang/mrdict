@@ -5,7 +5,10 @@
   "options": {
     "message": "Options"
   },
+  "contextMenu": {
+    "message": "Mark"
+  },
   "appDescription": {
-    "message": "More Reading DICTionary. Improve reading skills and efficiency by marking new words and translating only once at the end of article."
+    "message": "A browser extension helps measure readings not only as a dictionary"
   }
 }

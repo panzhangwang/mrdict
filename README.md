@@ -8,6 +8,15 @@
   </p>
 </div>
 
+## Backgroud
+Like others, I quite often resort to an instant dictionary when reading onto a new word. When another new word pops up, I do this again, sometimes, it also happens on the same one because I just forgot its meaning. The instant dict gives me the answer so quickly that I stop thinking and tend to lookup directly. 
+
+I need a fix to it. So, I came up with Mr Dict. It encourages me to mark new words along with reading and never stops thinking or guessing, and finally it gives me the answers for all, as well as other metrics like:
+
+* How long does it take to read the story?
+* How much (how may new words) do I understand the story?
+* How many correct guesses do I make?
+* How much better do I compare to others?
 
 ## Installation
 1. Clone the repository `git clone https://github.com/panzhangwang/mrdict.git`

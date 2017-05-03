@@ -4,7 +4,7 @@
   </h1>
 
   <p>
-    <strong>A browser extension helps measure readings not only as a dictionary</strong>
+    <strong>A browser extension helps measure readings not just as a dictionary</strong>
   </p>
 </div>
 

@@ -1,0 +1,63 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "128": "icons/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/background.js",
+      "scripts/libs/TextHighlighter.js"
+    ]
+  },
+  "commands": {
+    "mark": {
+      "description": "Mark new words"
+    }   
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": ["styles/notie.min.css"],
+      "js": [
+        "scripts/libs/jquery.min.js",
+        "scripts/libs/TextHighlighter.js",
+        "scripts/libs/notie.min.js",
+        "scripts/contentscript.js"        
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "19": "icons/icon-19.png",
+      "38": "icons/icon-38.png"
+    },
+    "default_title": "Mr Dict",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    "styles/content.css"
+  ]
+}
+
+

@@ -1,0 +1,63 @@
+body {
+  font-size: 1.1rem;
+}
+
+#app {
+  width: 330px;
+  min-height: 250px;
+  max-height: 600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.hit-res {
+  margin-top: -1rem;
+  margin-right: 1rem;
+}
+.trans {
+  padding: 5px;
+  background-color: #f5f2f0;
+}
+.well {
+  padding: 20px;
+  background-color: #f5f2f0;
+}
+.scroll {
+  font-size: 1.2rem;
+}
+.voice {
+  color: #aaa;
+  margin-left: 10px;
+}
+
+.action-container {
+  margin: 1em auto;
+}
+
+.appname {
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 5px 0 20px 0;
+  border-bottom: 1px solid #e8e8e8;  
+}
+
+.options{
+  color: #aaa;
+}
+
+.muted {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.marked {
+}
+
+.footer {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+/* Scroll Bar */
+::-webkit-scrollbar { width: 6px; }
+
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:window-inactive  { background: orange; }

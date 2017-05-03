@@ -1,0 +1,17 @@
+{
+  "appName": {
+    "message": "Mr Dict"
+  },
+  "options": {
+    "message": "Options"
+  },
+  "contextMenu": {
+    "message": "Mark"
+  },
+  "appTip": {
+    "message": "Mark new words while reading, keep marking and come here to lookup in the end."
+  },
+  "appDescription": {
+    "message": "A dictionary to enable meaningful reading. Mark mark... lookup."
+  }
+}

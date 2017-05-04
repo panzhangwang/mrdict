@@ -1,5 +1,6 @@
 import ext from "./utils/ext";
 import storage from "./utils/storage";
+import {HOST} from './utils/tools';
 
 function menuOnClick(info, tab) {
   ext.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -23,6 +24,7 @@ ext.commands.onCommand.addListener(function(command) {
     ext.tabs.sendMessage(activeTab.id, { action: command });
   });
 });
+
 
 ext.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -54,19 +56,32 @@ ext.runtime.onMessage.addListener(
       return true;
     }
 
+    if(request.action === "page_loaded") {
+    	const url = HOST + '/get?u=' + encodeURIComponent(request.href);
+      fetch(url)
+        .then(checkStatus)
+        .then((response) => response.json())
+        .then((response) => {
+          ext.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            const activeTab = tabs[0];
+            ext.tabs.sendMessage(activeTab.id, { action: 'notify', read: response });
+          });
+        })
+        .catch((error) => { console.log(error); });
+    }
+
     if(request.action === "addToCart") {
-    	storage.get('cart', function(resp) {
+      storage.get('cart', function(resp) {
         if(resp && resp.cart){
-          let cart = resp.cart;          
+          let cart = resp.cart;
           cart.words.push([request.text, request.result, request.uuid, request.readMode, request.language, '']);
           cart.langs.push(request.language);
           storage.set({cart: cart}, function() {
             sendResponse({ action: "added to cart" });
           });
         }
-  		});    	
+      });
     }
-
   }
 );
 

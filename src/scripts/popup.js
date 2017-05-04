@@ -2,15 +2,15 @@ import ext from "./utils/ext";
 import storage from "./utils/storage";
 import fetchData from './utils/fetchData';
 import googleTranslateTk from './utils/googleTranslateTk';
-import {getUILanguage} from './utils/tools';
+import {getUILanguage, HOST} from './utils/tools';
 const ac = new (window.AudioContext || window.webkitAudioContext)();
 
 
 function getGoogleSpeechURL(option) {
   return googleTranslateTk(option.q).then(function(hostAndTk) {
-      const {host, tk} = hostAndTk;      
+      const {host, tk} = hostAndTk;
       let url = host + '/translate_tts?ie=UTF-8&total=1&idx=0&client=t&prev=input';
-      url += `&textlen=${option.q.length}&tl=${option.tl}&tk=${tk}&q=${option.q}&ttsspeed=1`;      
+      url += `&textlen=${option.q.length}&tl=${option.tl}&tk=${tk}&q=${option.q}&ttsspeed=1`;
       return url;
   });
 }
@@ -38,11 +38,11 @@ $(document).on('click',".guess",function() {
       for (var i = 0; i < cart.words.length; i++) {
         if(index === i){
           cart.words[index][5] = checked;
-        } 
+        }
         if (cart.words[i][5]) {
           hits ++;
         }
-      }          
+      }
       storage.set({ cart: cart });
       $('.hits').text(hits);
     }
@@ -70,23 +70,23 @@ $(document).on('click',".compete",function() {
       for (var i = 0; i < cart.words.length; i++) {
         if(cart.words[i][5]){
           hits ++;
-        } 
-      } 
+        }
+      }
 
       storage.set({ cart: cart }, function(){
         ext.tabs.create({
-          url : 'http://mrdict.com/c?u=' + encodeURIComponent(url) + '&t=' + encodeURI(title) + 
-          '&l=' + lang + '&m=' + ml + '&c=' + count + '&d=' + duration + '&h=' + hits}, 
-          function(tab) { 
+          url : HOST + '/c?u=' + encodeURIComponent(url) + '&t=' + encodeURI(title) +
+          '&l=' + lang + '&m=' + ml + '&c=' + count + '&d=' + duration + '&h=' + hits},
+          function(tab) {
         });
       });
     }
-  });  
+  });
 });
 
 $(document).on('click',".remove",function() {
   const elm = this.id;
-  
+
   storage.get('cart', function(resp) {
     if (resp && resp.cart) {
       const cart = resp.cart;
@@ -95,8 +95,8 @@ $(document).on('click',".remove",function() {
       for (var i = 0; i < cart.words.length; i++) {
         if(cart.words[i][2] != elm){
           words.push(cart.words[i]);
-        } 
-      } 
+        }
+      }
       cart.words = words;
 
       storage.set({ cart: cart });
@@ -105,13 +105,13 @@ $(document).on('click',".remove",function() {
         ext.tabs.sendMessage(activeTab.id, { action: 'removeHighlight', elm: elm });
       });
     }
-  }); 
+  });
 });
 
 $(document).on('click',".voice",function() {
   const text = this.id;
   const lang = this.lang;
-  
+
   const option = {
     tl: lang,
     q: text
@@ -135,13 +135,13 @@ $(document).on('click',".start",function() {
   storage.get('cart', function(resp) {
     if (resp && resp.cart) {
       const cart = resp.cart;
-      cart.start = Date.now();      
+      cart.start = Date.now();
       storage.set({ cart: cart }, function(){
         ext.tabs.query({active: true, currentWindow: true}, function(tabs) {
           const activeTab = tabs[0];
           ext.tabs.sendMessage(activeTab.id, { action: 'start_hint'});
           window.close();
-        });        
+        });
       });
     }
 
@@ -160,7 +160,7 @@ $(document).on('click',".end",function() {
       const cart = resp.cart;
       cart.end = Date.now();
       cart.done = true;
-      
+
       storage.set({ cart: cart }, function(){
         const displayContainer = document.getElementById("display-container");
         displayContainer.innerHTML = templateList(data, cart);
@@ -202,7 +202,7 @@ $(document).on('click',".startNew",function() {
 const template = (data, cartData) => {
   let s = `<p class="appname">Mr Dict <a class="options right" href="#"><i class="tiny material-icons">language</i></a></p>`;
 
-  if (cartData.url == data.url) {    
+  if (cartData.url == data.url) {
 
     if (cartData.start == 0 && cartData.end == 0) {
       // render start reading
@@ -217,13 +217,13 @@ const template = (data, cartData) => {
           s += `<div class="chip">${item[0]}
           <a href="#" id="${item[2]}" class="remove"><i class="close material-icons">close</i></a>
           </div>`;
-        }    
+        }
       });
 
       return s += `<footer class="footer center-align">
-        <a href="#" id="${data.url}" title="${data.title}" rmode="${data.readMode}" 
+        <a href="#" id="${data.url}" title="${data.title}" rmode="${data.readMode}"
         class="end btn waves-effect waves-light red">End Reading</a></footer>`;
-      
+
     }
     if (cartData.done) {
       return templateList(data, cartData);
@@ -252,16 +252,16 @@ const templateList = (data, cartData) => {
   }
 
   let s = `<p class="appname">Mr Dict &nbsp;<span class="muted">${hd} read</span></p>`;
-  
+
   let hits = 0;
   for (var i = 0; i < cartData.words.length; i++) {
     if (cartData.words[i][5]) {
       hits ++;
     }
-  } 
+  }
 
   const disabled = cartData.voted ? 'disabled': '';
-  
+
   cartData.words.map((item, index) => {
     const checked = item[5] ? 'checked="checked"' : '';
 
@@ -270,7 +270,7 @@ const templateList = (data, cartData) => {
       <div class="row">
         <div class="col s10">
           <a href="#" id="${item[2]}" class="scroll">${item[0]}</a>
-          <a href="#" id="${item[0]}" lang="${item[4]}" class="voice"><i class="tiny material-icons">volume_up</i></span></a>          
+          <a href="#" id="${item[0]}" lang="${item[4]}" class="voice"><i class="tiny material-icons">volume_up</i></span></a>
         </div>
         <div class="col s2">
           <input type="checkbox" id="${index}" class="guess" ${checked} ${disabled}>
@@ -279,9 +279,9 @@ const templateList = (data, cartData) => {
         <div class="col s12">
           <div class="trans">${item[1]}</div>
         </div>
-      </div>      
+      </div>
       </div>`;
-    }    
+    }
   });
 
   if (!cartData.voted) {
@@ -290,7 +290,7 @@ const templateList = (data, cartData) => {
 
   let counts = {};
   cartData.langs.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
-  
+
   const keys = Object.keys(counts);
   let largest = 0;
   let mainLang = '';
@@ -306,7 +306,7 @@ const templateList = (data, cartData) => {
   const wordCount = cartData.words.length;
 
   if (!cartData.voted) {
-    s += `<footer class="footer center-align"><a href="#" id="${cartData.url}" name="${cartData.title}" lang="${mainLang}" 
+    s += `<footer class="footer center-align"><a href="#" id="${cartData.url}" name="${cartData.title}" lang="${mainLang}"
   ml="${ml}" count="${wordCount}" duration="${duration}" class="compete btn waves-effect waves-light">
   <i class="material-icons left">cloud</i>
   Compete Anonymously</a></footer>`;
@@ -343,7 +343,7 @@ const renderPopup = (data) => {
 
     if(data) {
       const tmpl = template(data, cartData);
-      displayContainer.innerHTML = tmpl; 
+      displayContainer.innerHTML = tmpl;
     } else {
       renderMessage("Sorry, could not extract this page's title and URL" + data)
     }

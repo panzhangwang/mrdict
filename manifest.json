@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -17,7 +17,7 @@
   "commands": {
     "mark": {
       "description": "Mark new words"
-    }   
+    }
   },
   "permissions": [
     "tabs",
@@ -41,7 +41,8 @@
         "scripts/libs/jquery.min.js",
         "scripts/libs/TextHighlighter.js",
         "scripts/libs/notie.min.js",
-        "scripts/contentscript.js"        
+        "scripts/libs/humanize-duration.js",
+        "scripts/contentscript.js"
       ],
       "run_at": "document_end",
       "all_frames": false

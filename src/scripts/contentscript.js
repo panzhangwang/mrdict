@@ -67,7 +67,7 @@ var extractTags = () => {
 
 function onRequest(request, sender, sendResponse) {
   if (request.action === 'process-page') {
-    sendResponse(extractTags()); 
+    sendResponse(extractTags());
   }
 
   if (request.action === 'menu_click' || request.action === 'mark') {
@@ -77,10 +77,10 @@ function onRequest(request, sender, sendResponse) {
         const cart = resp.cart;
         if (cart.url == document.location.href) {
           if (cart.start > 0 && cart.end == 0) {
-            valid = true;            
+            valid = true;
           } else {
             return notie.alert({
-              type: 'warning', 
+              type: 'warning',
               position: 'bottom',
               text: 'You cannot mark, because reading has ended on the current page.'
             });
@@ -91,7 +91,7 @@ function onRequest(request, sender, sendResponse) {
         mark();
       } else {
         notie.alert({
-          type: 'warning', 
+          type: 'warning',
           position: 'bottom',
           text: 'Reading NOT started. To start, click the extension icon.'
         });
@@ -111,7 +111,7 @@ function onRequest(request, sender, sendResponse) {
   if (request.action === 'scroll') {
     var $elm = $("."+request.elm);
 
-    
+
 
     if ($elm) {
       var elmOffset;
@@ -121,7 +121,7 @@ function onRequest(request, sender, sendResponse) {
       if (iframe) {
         var idoc= iframe.contentDocument || iframe.contentWindow.document;
         var $el = $(iframe).contents().find("."+request.elm);
-        
+
         elmOffset = $el.offset().top;
         elmHeight = $el.height();
       } else {
@@ -140,7 +140,7 @@ function onRequest(request, sender, sendResponse) {
 
       var iframe= document.getElementById('simple-article');
 
-      if (iframe) {        
+      if (iframe) {
         var idoc= iframe.contentDocument || iframe.contentWindow.document;
         $(idoc.body).animate({
           'scrollTop': offset
@@ -180,6 +180,51 @@ function onRequest(request, sender, sendResponse) {
       }
     }
   }
+
+  if (request.action === 'notify') {
+    const read = request.read;
+    const readers = read.readers ? read.readers : 0;
+    const avgWords = read.words ? read.words : 0;
+    const avgDuration = read.duration ? humanizeDuration(read.duration, { round: true }) : '';
+
+    if (readers > 9) {
+      storage.get('cart', function(resp) {
+        if (resp && resp.cart) {
+
+          const cart = resp.cart;
+          const currentURL = document.location.href;
+
+          if (cart.done || cart.start == 0) {
+            const msg = readers + ' people have read this, <br>New words avg: ' + avgWords + ', Read time avg: ' + avgDuration;
+
+            notie.confirm({
+              position: 'bottom',
+              text: msg,
+              submitText: 'Read to Challenge',
+              submitCallback: function () {
+                cart.url = currentURL;
+                cart.title = getTitle();
+                cart.start = Date.now();
+                cart.end = 0;
+                cart.done = false;
+                cart.voted = false;
+                cart.langs = [];
+                cart.words = [];
+                storage.set({ cart: cart }, function(){
+                  notie.alert({
+                    type: 'success',
+                    time: 2,
+                    position: 'bottom',
+                    text: 'Reading just getting started. '
+                  });
+                });
+              }
+            });
+          }
+        }
+      });
+    }
+  }
 }
 
 
@@ -193,7 +238,7 @@ function mark() {
     text = (''+idoc.getSelection()).trim();
     readMode = true;
   }
-    
+
   if (text !== '') {
     if (text.length > 50) {
       return notie.alert({
@@ -203,8 +248,8 @@ function mark() {
         text: 'Selection is too long. It should be less than 50.'
       });
     }
-    var uuid = 'm' + guid();  
-    
+    var uuid = 'm' + guid();
+
     var option = {
       from: 'auto',
       q: text,
@@ -255,8 +300,12 @@ function mark() {
         });
       });
     });
-    
+
   }
 }
 
 ext.runtime.onMessage.addListener(onRequest);
+
+$(function() {
+  ext.runtime.sendMessage({ action: "page_loaded", href: document.location.href, title: getTitle() });
+});

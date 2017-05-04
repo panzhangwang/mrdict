@@ -18,6 +18,24 @@ I need a fix to it. So, I came up with Mr Dict. It encourages me to mark new wor
 * How many correct guesses do I make?
 * How much better do I compare to others?
 
+## Steps
+
+### 1. Start to read
+<div align="center">
+  <img src="./promos/start.png">
+</div>
+
+### 2. Mark or end reading
+<div align="center">
+  <img src="./promos/end.png">
+</div>
+
+### 3. Lookup
+<div align="center">
+  <img src="./promos/check.png">
+</div>
+
+
 ## Installation
 1. Clone the repository `git clone https://github.com/panzhangwang/mrdict.git`
 2. Run `npm install`

@@ -24,9 +24,9 @@ I need a fix to it. So, I came up with Mr Dict. It encourages me to mark new wor
 3. Run `npm run build`
 
 Alternately, if you want to try out the sample extension, here are the download links. After you download it, unzip the file and load it in your browser using the steps mentioned below.
- - [**Download Chrome Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0/chrome.zip)
- - [**Download Opera Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0/opera.zip)
- - [**Download Firefox Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0/firefox.zip)
+ - [**Download Chrome Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0.0/chrome.zip)
+ - [**Download Opera Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0.0/opera.zip)
+ - [**Download Firefox Extension**](https://github.com/panzhangwang/mrdict/releases/download/v1.0.0/firefox.zip)
 
 
 ##### Load the extension in Chrome & Opera

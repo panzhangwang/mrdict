@@ -20,7 +20,7 @@ I need a fix to it. So, I came up with Mr Dict. It encourages me to mark new wor
 
 ## Steps
 
-### 1. Start to read
+### 1. Start reading
 <div align="center">
   <img src="./promos/start.png">
 </div>

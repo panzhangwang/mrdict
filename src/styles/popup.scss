@@ -9,10 +9,6 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-.hit-res {
-  margin-top: -1rem;
-  margin-right: 1rem;
-}
 .trans {
   padding: 5px;
   background-color: #f5f2f0;
@@ -37,7 +33,7 @@ body {
   font-size: 1.2rem;
   padding: 0;
   margin: 5px 0 20px 0;
-  border-bottom: 1px solid #e8e8e8;  
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .options{
@@ -50,6 +46,9 @@ body {
 }
 
 .marked {
+  label {
+    padding-left: 20px !important;
+  }
 }
 
 .footer {

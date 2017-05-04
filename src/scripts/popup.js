@@ -5,6 +5,8 @@ import googleTranslateTk from './utils/googleTranslateTk';
 import {getUILanguage, HOST} from './utils/tools';
 const ac = new (window.AudioContext || window.webkitAudioContext)();
 
+const HEADER = `<p class="appname">Mr Dict <a class="options right" href="#">
+  <i class="tiny material-icons">language</i></a></p>`;
 
 function getGoogleSpeechURL(option) {
   return googleTranslateTk(option.q).then(function(hostAndTk) {
@@ -200,7 +202,7 @@ $(document).on('click',".startNew",function() {
  * main template
  */
 const template = (data, cartData) => {
-  let s = `<p class="appname">Mr Dict <a class="options right" href="#"><i class="tiny material-icons">language</i></a></p>`;
+  let s = HEADER;
 
   if (cartData.url == data.url) {
 
@@ -244,14 +246,10 @@ const templateList = (data, cartData) => {
   const duration = cartData.end - cartData.start;
   const hd = humanizeDuration(duration, { language: getUILanguage(), round: true });
 
+  let s = HEADER;
   if (!cartData.words.length) {
-    return `
-    <p class="appname">Mr Dict</p>
-    <p>Completed in: ${hd}, no new words to lookup.</p>
-    `;
+    return s + `<p>Completed in: ${hd}, no new words to lookup.</p>`;
   }
-
-  let s = `<p class="appname">Mr Dict &nbsp;<span class="muted">${hd} read</span></p>`;
 
   let hits = 0;
   for (var i = 0; i < cartData.words.length; i++) {
@@ -274,7 +272,7 @@ const templateList = (data, cartData) => {
         </div>
         <div class="col s2">
           <input type="checkbox" id="${index}" class="guess" ${checked} ${disabled}>
-          <label for="${index}"></label>
+          <label for="${index}" class="right"></label>
         </div>
         <div class="col s12">
           <div class="trans">${item[1]}</div>
@@ -285,7 +283,7 @@ const templateList = (data, cartData) => {
   });
 
   if (!cartData.voted) {
-    s += `<div class="hit-res right"><span class="grey-text">Correct Guess:</span>&nbsp;<span class="hits">${hits}</span></div>`;
+    s += `<div class="orange-text text-darken-4">${hd} <div class="right">Correct: <span class="hits">${hits}</span></div></div>`;
   }
 
   let counts = {};

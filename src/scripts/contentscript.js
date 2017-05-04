@@ -26,10 +26,10 @@ function getSelectionText() {
 
 function getGoogleURL(option) {
   return googleTranslateTk(option.q).then(function(hostAndTk) {
-      const {host, tk} = hostAndTk;
-      let url = host + '/translate_a/single?client=t&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&source=btn&rom=1&srcrom=1&ssel=0&tsel=0&kc=0';
-      url += `&sl=${option.from}&tl=${option.to}&hl=${option.hl}&tk=${tk}&q=${option.q}`;
-      return url;
+    const {host, tk} = hostAndTk;
+    let url = host + '/translate_a/single?client=t&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&source=btn&rom=1&srcrom=1&ssel=0&tsel=0&kc=0';
+    url += `&sl=${option.from}&tl=${option.to}&hl=${option.hl}&tk=${tk}&q=${option.q}`;
+    return url;
   });
 }
 
